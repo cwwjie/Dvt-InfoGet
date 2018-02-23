@@ -1,8 +1,8 @@
 import dva from 'dva';
 import fetch from 'dva/fetch';
 
-import './index.less';
 import 'antd-mobile/dist/antd-mobile.less';
+import './index.less';
 
 import loadModel from './models/load';
 import routes from './routes';
