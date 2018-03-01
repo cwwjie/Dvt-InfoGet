@@ -13,4 +13,6 @@ app.model(loadModel);
 
 app.router(routes);
 
+document.getElementById('loading').innerHTML = '';
+
 app.start('#root');
