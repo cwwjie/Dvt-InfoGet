@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import { connect } from 'dva';
-import { routerRedux } from 'dva/router';
+import fetch from 'dva/fetch';
 
-import config from './../../config';
+import { Link } from 'dva/router';
 
-class Home extends Component {
+import config from './../../../config';
+
+class Computer extends Component {
   constructor(props) {
     super(props);
 
@@ -16,18 +18,18 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    const _this = this;
+    // const _this = this;
 
-    this.getGatherInfo()
-    .then(val => {
-      if (val.result === '0') {
-        _this.dealwithInfo(val.data);
-        _this.setState({'isloaded': true})
-      } else {
-        _this.setState({'isloaded': `请求服务器成功, 但是获取的用户收集信息有误! 原因:${val.message}. 请联系客服!`})
-      }
-    }, 
-    error => _this.setState({'isloaded': error}));
+    // this.getGatherInfo()
+    // .then(val => {
+    //   if (val.result === '0') {
+    //     _this.dealwithInfo(val.data);
+    //     _this.setState({'isloaded': true})
+    //   } else {
+    //     _this.setState({'isloaded': `请求服务器成功, 但是获取的用户收集信息有误! 原因:${val.message}. 请联系客服!`})
+    //   }
+    // }, 
+    // error => _this.setState({'isloaded': error}));
   }
 
   getGatherInfo() {
@@ -59,21 +61,11 @@ class Home extends Component {
   }
 
   render() {
-    const isloaded = this.state.isloaded;
-
-    const HomeNode = (
-      <div className="Home">
-
+    return (
+      <div className="Computer">
+        <Link to="/about">这是结果页</Link>
       </div>
     )
-
-    if (isloaded === null) {
-      return <div className="Home">正在加载...</div>
-    } else if (isloaded === true) {
-      return HomeNode
-    } else {
-      return <div className="Home">{isloaded}</div>
-    }
   }
 }
 
@@ -82,4 +74,4 @@ const mapStateToProps = (state) => ({
   loadData: state.load.value
 })
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps)(Computer);
