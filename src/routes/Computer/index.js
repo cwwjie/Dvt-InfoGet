@@ -8,20 +8,50 @@ import result from './result/index';
 
 class Computer extends Component {
   render() {
-    let Page = {
-      'main': main,
-      'preview': preview,
-      'result': result,
-    }
+    if (this.props.isLoadingCompleted === true) {
+      let Page = {
+        'main': main,
+        'preview': preview, // 订单信息预览
+        'result': result
+      }
+  
+      return (
+        <Route exact path="/" component={Page[this.props.router]} />
+      );
+    } else {
 
-    return (
-      <Route exact path="/" component={Page[this.props.router]} />
-    );
+      // 加载失败
+      if (
+        this.props.isLoadingCompleted === false &&
+        this.props.gatherOrderItem === false &&
+        this.props.gatherInfo === false
+      ) {
+        return (
+          <div>
+            {this.props.loadingErrorMessage}
+          </div>
+        )
+      } else {
+
+        // 正在加载
+        return (
+          <div id="loading">
+            <div className="loading">
+              <div className="loader"><div><div><div><div><div><div></div></div></div></div></div></div></div>
+            </div>
+          </div>
+        )
+      }
+    }
   }
 }
 
 const mapStateToProps = (state) => ({
-  router: state.computer.router
-})
+  'isLoadingCompleted': state.load.isLoadingCompleted,
+  'loadingErrorMessage': state.load.loadingErrorMessage,
+  'gatherOrderItem': state.load.gatherOrderItem,
+  'gatherInfo': state.load.gatherInfo,
+  'router': state.computer.router
+});
 
 export default connect(mapStateToProps)(Computer);

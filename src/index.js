@@ -6,7 +6,6 @@ import './index.less';
 import load from './models/load';
 import computerModel from './models/computer';
 import mobileModel from './models/mobile';
-import pageModel from './models/page';
 import routes from './routes';
 
 // import VConsole from 'vconsole';
@@ -17,7 +16,6 @@ const app = dva();
 app.model(load.Model);
 app.model(computerModel);
 app.model(mobileModel);
-app.model(pageModel);
 
 app.router(routes);
 

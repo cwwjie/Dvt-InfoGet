@@ -6,7 +6,7 @@ import { Link } from 'dva/router';
 
 import config from './../../../config';
 
-class Computer extends Component {
+class Result extends Component {
   constructor(props) {
     super(props);
 
@@ -74,4 +74,4 @@ const mapStateToProps = (state) => ({
   loadData: state.load.value
 })
 
-export default connect(mapStateToProps)(Computer);
+export default connect(mapStateToProps)(Result);

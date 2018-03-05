@@ -2,14 +2,15 @@ export default {
   'namespace': 'computer',
 
   'state': {
-    'router': 'main' // preview main result
+    'router': 'main' // loading preview main result
   },
 
   'reducers': {
-    initPage(state, data) {
+    jumpToRouter(state, data) {
       return {
-        ...state
+        ...state,
+        'router': data.router
       }
-    }
+    },
   }
 };

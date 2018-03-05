@@ -6,6 +6,8 @@ const load = {
     'namespace': 'load',
   
     'state': {
+      'isLoadingCompleted': false,
+      'loadingErrorMessage': '错误信息',
       'gatherOrderItem': {
         // 'adultNum': 2,
         // 'belongId': 33,
@@ -56,6 +58,7 @@ const load = {
         // 'updateTime': 1515615162000,
         // 'userId': 106,
       },
+      // 如果为 false 说明是第一次填写
       'gatherInfo': {
         // adultNum: 1,
         // attachmentList: [{
@@ -152,6 +155,8 @@ const load = {
       setGather(state, data) {
         return {
           ...state,
+          'isLoadingCompleted': data.isLoadingCompleted,
+          'loadingErrorMessage': data.loadingErrorMessage,
           'gatherOrderItem': data.gatherOrderItem,
           'gatherInfo': data.gatherInfo
         }
@@ -162,23 +167,49 @@ const load = {
   initGatherInfo: function (app) {
     this.getGatherInfo().then(val => {
       let gatherOrderItem = localStorage.getItem('loginSuccessful');
-  
-      if (val) {
+
+      if (gatherOrderItem) {
         app._store.dispatch({
           'type': 'load/setGather',
-          'gatherOrderItem': gatherOrderItem ? JSON.parse(gatherOrderItem) : {},
+          'isLoadingCompleted': true,
+          'loadingErrorMessage': '成功获取订单信息',
+          'gatherOrderItem': JSON.parse(gatherOrderItem),
           'gatherInfo': val
         });
+
+        app._store.dispatch({
+          'type': 'computer/jumpToRouter',
+          'router': val ? 'preview' : 'main' // 表示 (已 / 第一次) 填写信息收集
+        });
+      } else {
+
+        //  获取 localStorage 订单信息 失败
+        app._store.dispatch({
+          'type': 'load/setGather',
+          'isLoadingCompleted': false,
+          'loadingErrorMessage': '订单信息获取有误！请您检查升级更换浏览器 或 联系客服。',
+          'gatherOrderItem': false,
+          'gatherInfo': false
+        });
       }
-    })
+    }, error => {
+
+      //  获取 服务器 订单信息 失败
+      app._store.dispatch({
+        'type': 'load/setGather',
+        'isLoadingCompleted': false,
+        'loadingErrorMessage': error,
+        'gatherOrderItem': false,
+        'gatherInfo': false
+      });
+    });
   },
 
-  // 乞求这里的请求不会报错吧...
   getGatherInfo: function () {
     let uniqueKey = localStorage.getItem('_uniqueKey');
     let token = localStorage.getItem('_token');
     let digest = localStorage.getItem('_digest');
-  
+
     return new Promise((resolve, reject) => {
       fetch(`${config.URLversion}/gather/link/${uniqueKey}/getGatherInfo.do`, {
         'method': 'GET',
@@ -188,7 +219,7 @@ const load = {
           'digest': digest
         }
       }).then(
-        response =>  response.json(),
+        response => response.json(),
         error => reject(`向服务器发起请求用户收集信息失败, 原因: ${error}`)
       )
       .then(val => {
