@@ -3,6 +3,8 @@ import { connect } from 'dva';
 
 import Header from './../../../components/computer/header/index';
 import Copyright from './../../../components/computer/copyright/index';
+import ShopTrick from './../../../assets/ShopTrick.png';
+import Navigation from './navigation';
 
 class Main extends Component {
   // constructor(props) {
@@ -21,13 +23,15 @@ class Main extends Component {
 
         <div className="Computer-content">
 
+          <Navigation/>
+
           <div className="content-input-area">
             <div className="input-area-header">
+              <img alt="用户信息收集" className="area-header-background" src={ShopTrick} />
+              <h2>Diving Time 用户信息收集</h2>
             </div>
           </div>
 
-          <div className="content-navigation">
-          </div>
         </div>
 
         <Copyright />
