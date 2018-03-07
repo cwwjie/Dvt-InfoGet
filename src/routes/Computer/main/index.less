@@ -90,13 +90,132 @@
       }      
     }
 
-    .navigation-list .navigation-item {
+    .navigation-list {
+      padding: 2px 0px;
 
-      
+      .navigation-item {
+        position: relative;
+        height: 50px;
+        cursor: pointer;
+
+        .item-content {
+          height: 50px;
+          line-height: 50px;
+          padding-left: 20px;
+
+          img {
+            position: relative;
+            top: -3px;
+          }
+
+          .active {
+            color: #409EFF;
+            font-weight: bold;
+          }
+
+          span {
+            padding-left: 30px;
+          }
+        }
+
+        .item-active {
+          position: absolute;
+          top: 0px;
+          left: -1px;
+          background: #409EFF;
+          height: 50px;
+          width: 2px;
+        }
+      }
+
+      .navigation-item:active {
+        background: #409EFF;
+
+        .item-content span {
+          color: #fff;
+        }
+      }
     }
 
+    .navigation-terms {
+      padding: 20px;
+
+      .terms-Agree {
+        .terms-link {
+          padding-left: 0px;
+          color: #F56C6C;
+          cursor: pointer;
+          text-decoration: underline;
+        }
+      }
+
+      .navigation-submit {
+        margin-top: 20px;
+        height: 32px;
+        line-height: 30px;
+        text-align: center;
+
+        border: 1px solid #F56C6C;
+        background: #F56C6C;
+        color: #fff;
+        cursor: not-allowed;
+      }
+
+      .submit-active {
+        border: 1px solid #409EFF;
+        color: #409EFF;
+        cursor: pointer;
+      }
+    }
 
   }
   
+  .content-wechat {
+    position: relative;
+    height: 50px;
+    width: 100%;
 
+    .wechat-description {
+      position: absolute;
+      right: 20px;
+      top: -28px;
+    }
+
+    .wechat-QRcode {
+      position: absolute;
+      top: 0px;
+      right: 60px;
+      cursor: pointer;
+
+      .QRcode {
+        display: none;
+        position: absolute;
+        top: 55px;
+        left: -55px;
+        width: 160px;
+        padding: 20px;
+        border-radius: 4px;
+        border: 2px solid #409EFF;
+        background: #fff;
+
+        div {
+          padding-top: 10px;
+          font-size: 16px;
+          font-weight: bold;
+          text-align: center;
+        }
+
+        img {
+          width: 120px;
+          height: 120px;
+        }
+      }
+    }
+
+    .wechat-QRcode:hover {
+      .QRcode {
+        display: block;
+      }
+    }
+  }
 }

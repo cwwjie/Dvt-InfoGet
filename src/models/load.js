@@ -8,6 +8,7 @@ const load = {
     'state': {
       'isLoadingCompleted': false,
       'loadingErrorMessage': '错误信息',
+
       'gatherOrderItem': {
         // 'adultNum': 2,
         // 'belongId': 33,
@@ -58,6 +59,7 @@ const load = {
         // 'updateTime': 1515615162000,
         // 'userId': 106,
       },
+
       // 如果为 false 说明是第一次填写
       'gatherInfo': {
         // adultNum: 1,
@@ -148,7 +150,21 @@ const load = {
         //     ]
         //   }
         // ]
-      }
+      },
+
+      // 如果为 false 说明正在加载
+      'AdminInfo': false
+      // {
+      //   'qq': '971637111',
+      //   'qrCode': '/source/image/admin/qrCode/d3299495d994.png',
+      //   'nickName': '止木',
+      //   'nameCard': '/source/image/admin/nameCard/bb2c60bde39f.png',
+      //   'name': '葛武荣',
+      //   'mobile': '18503021111',
+      //   'email': 'gewurong@divingtime.asia',
+      //   'webchat': '971637111',
+      //   'email': '2498531111@qq.com'
+      // }
     },
   
     'reducers': {
@@ -160,11 +176,19 @@ const load = {
           'gatherOrderItem': data.gatherOrderItem,
           'gatherInfo': data.gatherInfo
         }
+      },
+      setAdminInfo(state, data) {
+        return {
+          ...state,
+          'AdminInfo': data.AdminInfo
+        }
       }
     }
   },
 
   initGatherInfo: function (app) {
+    const _this = this;
+
     this.getGatherInfo().then(val => {
       let gatherOrderItem = localStorage.getItem('loginSuccessful');
 
@@ -179,8 +203,14 @@ const load = {
 
         app._store.dispatch({
           'type': 'computer/jumpToRouter',
-          'router': val ? 'preview' : 'main' // 表示 (已 / 第一次) 填写信息收集
+          'router': 'main' // 暂时这个,测试用
+          // 'router': val ? 'preview' : 'main' // 表示 (已 / 第一次) 填写信息收集
         });
+
+        _this.getAdminInfo().then(val => app._store.dispatch({
+          'type': 'load/setAdminInfo',
+          'AdminInfo': val
+        }));
       } else {
 
         //  获取 localStorage 订单信息 失败
@@ -230,6 +260,28 @@ const load = {
         }
       })
       .catch(error => reject(`向服务器发起请求用户收集信息失败, 原因: ${error}`));
+    });
+  },
+
+  getAdminInfo: function() {
+    let orderItem = JSON.parse(localStorage.getItem('loginSuccessful'));
+
+    return new Promise((resolve, reject) => {
+      fetch(`${config.URLversion}/admin/${orderItem.belongId}/getAdminInfo.do`, {
+        'method': 'GET',
+        'headers': { 'Content-Type': 'application/json; charset=utf-8' }
+      }).then(
+        response => response.json(),
+        error => reject(`向服务器发起请求二维码信息失败, 原因: ${error}`)
+      )
+      .then(val => {
+        if (val.result === '0') {
+          resolve(val.data)
+        } else {
+          reject(`请求服务器成功, 但是获取的二维码信息有误! 原因:${val.message}. 请联系客服!`)
+        }
+      })
+      .catch(error => reject(`向服务器发起请求二维码信息失败, 原因: ${error}`));
     });
   }
 }
