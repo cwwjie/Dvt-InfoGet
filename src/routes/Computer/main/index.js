@@ -6,8 +6,10 @@ import ShopTrick from './../../../assets/ShopTrick.png';
 import Header from './../../../components/computer/header/index';
 import Copyright from './../../../components/computer/copyright/index';
 import Navigation from './navigation';
+import WavyLines from './wavyLines';
 import Wechat from './wechat';
 import OrderInfor from './orderInfor';
+import GiftInfor from './giftInfor';
 
 class Main extends Component {
   // constructor(props) {
@@ -37,6 +39,10 @@ class Main extends Component {
             <Wechat />
 
             <OrderInfor />
+
+            <WavyLines />
+
+            <GiftInfor />
 
           </div>
 

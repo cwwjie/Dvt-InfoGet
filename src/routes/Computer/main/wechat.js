@@ -28,11 +28,13 @@ class Navigation extends Component {
   }
 
   render() {
-    return this.props.AdminInfo ? (
-      <div className="content-wechat">
+    const AdminInfo = this.props.AdminInfo;
+
+    return AdminInfo ? (
+      <div className="content-wechat" style={{'height': AdminInfo.qrCode ? '50px' : '20px'}}>
 
         <div className="wechat-description">
-          行程负责人: {this.props.AdminInfo.name} 微信号: {this.props.AdminInfo.webchat}
+          { AdminInfo.name ? `行程负责人: ${AdminInfo.name}` : ''} {AdminInfo.webchat ? `微信号: ${AdminInfo.webchat}` : ''}
         </div>
 
         {this.renderQRcode.call(this)}

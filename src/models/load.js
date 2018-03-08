@@ -203,8 +203,7 @@ const load = {
 
         app._store.dispatch({
           'type': 'computer/jumpToRouter',
-          'router': 'main' // 暂时这个,测试用
-          // 'router': val ? 'preview' : 'main' // 表示 (已 / 第一次) 填写信息收集
+          'router': val ? 'preview' : 'main' // 表示 (已 / 第一次) 填写信息收集
         });
 
         _this.getAdminInfo().then(val => app._store.dispatch({

@@ -12,6 +12,11 @@ export default {
     return `${yyyy}-${mmstring}-${ddstring}`;
   },
   
+  // 时间戳 转换 xxxx-xx-xx 字符串
+  timeStampToFormat: function (myDate) {
+    return this.dateToFormat(new Date(myDate));
+  },
+  
   // Date 转换 20180102 字符串
   dateToYYYYmmNumber: (myDate) => {
     let yyyy = myDate.getFullYear();
