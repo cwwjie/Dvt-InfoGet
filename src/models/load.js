@@ -168,6 +168,7 @@ const load = {
     },
   
     'reducers': {
+
       setGather(state, data) {
         return {
           ...state,
@@ -177,6 +178,7 @@ const load = {
           'gatherInfo': data.gatherInfo
         }
       },
+
       setAdminInfo(state, data) {
         return {
           ...state,
