@@ -61,11 +61,11 @@ class Home extends Component {
             transparent
             maskClosable={false}
             onClose={() => this.setState({isModalQRcodeShow: false})}
-            title="扫描二维码关注我"
+            title="扫描二维码联系我"
             footer={[{ text: '确定', onPress: () => this.setState({isModalQRcodeShow: false}) }]}
             wrapProps={{ onTouchStart: this.onWrapTouchStart }}
           >
-            <div>
+            <div className="header-qrCode-modal">
               <img alt="qrCode" src={`${config.URLbase}${this.props.AdminInfo.qrCode}`} />
             </div>
           </Modal>
